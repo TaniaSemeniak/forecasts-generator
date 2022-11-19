@@ -13,3 +13,53 @@
 /* При генерации нового предсказания старое предсказание должно добавляться в начало списка «Мои предсказания» — .forecasts  */
 
 /* Для добавления предсказания в список воспользуйся шаблоном forecast-item */
+
+const forecastButton = document.querySelector('.forecast-btn');
+const container = document.querySelector(".forecasts");
+
+const forecastTemplate = document.querySelector('#forecast-item');
+const newForecast = document.querySelector('.current-forecast');
+
+//Генерация предсказаний
+function generateRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+} 
+
+forecastButton.addEventListener('click', function () {
+    const number = generateRandomInt(1, 6);
+    let prediction = '';
+
+    if (number == 1) {
+        prediction = 'Ты станешь спортивнее и сильнее!';
+    }
+    if (number == 2) {
+        prediction = 'Зима будет теплой и солнечной!';
+    }
+    if (number == 3) {
+        prediction = 'Завтра будет хорошая погода!';
+    }
+    if (number == 4) {
+        prediction = 'Сырники получатся одинаково круглыми и красивыми!';
+    }
+    if (number == 5) {
+        prediction = 'Ты скоро встретишься с семьей!'
+    }
+
+    newForecast.querySelector('h1').textContent = prediction;
+      
+    //Генерация случайного %
+    const percentage = Math.floor(Math.random() * 100) + "%";
+    newForecast.querySelector('p').textContent = percentage;
+    const joinForecast = makeForecastByTemplate(prediction, percentage);
+    container.append(joinForecast);
+})
+
+//Шаблон предсказаний
+function makeForecastByTemplate(title, percentage) {
+    const myForecast = forecastTemplate.content.cloneNode(true);
+
+    myForecast.querySelector('h3').textContent = title;
+    myForecast.querySelector('p').textContent = percentage;
+
+    return myForecast;
+}
